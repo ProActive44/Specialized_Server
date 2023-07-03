@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/welcome.html");
+  res.send(
+    '<h1>Welcome to the Server</h1><h2>Navigation</h2><ul><li><a href="/signup">Signup</a></li><li><a href="/login">Login</a></li><li><a href="/products">Products</a></li><li><a href="/cart">Cart</a></li><li><a href="/wishlist">Wishlist</a></li></ul>'
+  );
 });
 
 app.use("/signup", signupRouter);
