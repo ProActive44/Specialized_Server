@@ -3,7 +3,7 @@
   const productSchema = new Schema({
     name: { type: String, required: true },
     rating: { type: Number, required: true },
-    discount: { type, Number, required: true},
+    discount: { type: Number, required: true},
     price: { type: Number, required: true },
     type: { type: String, required: true },
     category: { type: String, required: true },

@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
   try {
-    const token = req.headers.autherization?.split(" ")[1];
+    const token = req.headers.Authorization?.split(" ")[1];
 
     if (!token) {
       return res.status(400).send({ msg: "please login again" });

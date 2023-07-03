@@ -40,3 +40,4 @@ wishlistRouter.delete("/:id", async (req, res) => {
 
 
 
+module.exports = wishlistRouter
