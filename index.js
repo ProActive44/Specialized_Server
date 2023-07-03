@@ -35,6 +35,5 @@ app.listen(process.env.PORT, async () => {
   } catch (error) {
     console.log(error);
   }
-});
-
+})
 
