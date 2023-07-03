@@ -37,11 +37,17 @@ productsRouter.get("/", async (req, res) => {
       filter.discount = { $gte: parseInt(id_gte), $lte: parseInt(id_lte) };
     }
 
+  
     if (color_like) {
-      const colorValues = Array.isArray(color_like) ? color_like : [color_like];
-      let colorQuery = { color: { $in: colorValues } };
-      filter.color = { $in: colorQuery };
+      let colorValues;
+      if (Array.isArray(color_like)) {
+        colorValues = color_like;
+      } else {
+        colorValues = color_like.split(",");
+      }
+      filter.color = { $in: colorValues };
     }
+    
 
     if (category) {
       filter.category = category;
@@ -100,3 +106,5 @@ productsRouter.get("/:id", async (req, res) => {
 });
 
 module.exports = productsRouter;
+
+

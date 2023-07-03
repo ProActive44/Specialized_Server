@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const wishlistSchema = new Schema({
-  productId: { type: Schema.Types.ObjectId, ref: "product", required: true },
+  _id: { type: Schema.Types.ObjectId, ref: "product", required: true },
   name: { type: String, required: true },
   rating: { type: Number, required: true },
   discount: { type:Number, required: true},
