@@ -23,10 +23,10 @@ app.get("/", (req, res) => {
 
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
+app.use("/products", productsRouter);
 
 // app.use(authMiddleware);
 
-app.use("/products", productsRouter);
 app.use("/cart", cartRouter);
 app.use("/wishlist", wishlistRouter);
 
@@ -38,3 +38,4 @@ app.listen(process.env.PORT, async () => {
     console.log(error);
   }
 });
+
