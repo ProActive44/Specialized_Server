@@ -6,7 +6,11 @@ const wishlistRouter = express.Router();
 // Get wishlist products
 wishlistRouter.get("/", async (req, res) => {
   try {
-    const wishlistProducts = await wishlistModel.find();
+    let userId = req.headers.userId;
+    if (!userId) {
+      return res.status(501).send({ error: "user not logged in" });
+    }
+    const wishlistProducts = await wishlistModel.find({ userId });
     res.json(wishlistProducts);
   } catch (error) {
     // console.error(error);

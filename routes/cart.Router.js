@@ -6,7 +6,11 @@ const cartRouter = express.Router();
 // Get cart products
 cartRouter.get("/", async (req, res) => {
   try {
-    const cartProducts = await cartModel.find();
+    let userId = req.headers.userId;
+    if (!userId) {
+      return res.status(501).send({ error: "user not logged in" });
+    }
+    const cartProducts = await cartModel.find({userId});
     res.json(cartProducts);
   } catch (error) {
     // console.error(error);
