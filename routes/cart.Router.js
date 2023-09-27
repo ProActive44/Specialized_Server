@@ -24,6 +24,7 @@ cartRouter.get("/", async (req, res) => {
 cartRouter.post("/", async (req, res) => {
   try {
     const product = req.body;
+    delete product._id;
     const addedProduct = await cartModel.create(product);
     res.status(201).json(addedProduct);
   } catch (error) {

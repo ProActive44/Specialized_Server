@@ -24,6 +24,8 @@ wishlistRouter.get("/", async (req, res) => {
 wishlistRouter.post("/", async (req, res) => {
   try {
     const newWish = req.body;
+    delete newWish._id;
+    console.log(newWish)
     const addedProduct = await wishlistModel.create(newWish);
     res.status(201).json(addedProduct);
   } catch (error) {
