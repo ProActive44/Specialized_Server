@@ -8,7 +8,7 @@ wishlistRouter.get("/", async (req, res) => {
   try {
     let userId = req.headers.userid;
     if (!userId) {
-      return res.status(501).send({ error: "user not logged in" });
+      return res.status(401).send({ error: "User not logged in" });
     }
     const wishlistProducts = await wishlistModel.find({ userId: userId });
     res.json(wishlistProducts);
