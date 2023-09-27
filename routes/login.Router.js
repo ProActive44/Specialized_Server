@@ -20,10 +20,10 @@ loginRouter.post("/", async (req, res) => {
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       res.status(200).send({ msg: "Login Successful", token });
     } else {
-      res.status(200).send({ msg: "Please enter right credentials"})
+      res.status(200).send({ msg: "Please enter right credentials" });
     }
   } catch (error) {
-    res.status(500).send({ msg: "Login Failed" });
+    res.status(500).send({ msg: "Login Failed", msg: error });
   }
 });
 

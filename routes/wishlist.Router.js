@@ -1,5 +1,5 @@
-const express = require('express');
-const wishlistModel = require('../models/wishlist.model');
+const express = require("express");
+const wishlistModel = require("../models/wishlist.model");
 
 const wishlistRouter = express.Router();
 
@@ -10,7 +10,9 @@ wishlistRouter.get("/", async (req, res) => {
     res.json(wishlistProducts);
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ error: "Failed to fetch wishlist products" });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch wishlist products", msg: error });
   }
 });
 
@@ -22,7 +24,9 @@ wishlistRouter.post("/", async (req, res) => {
     res.status(201).json(addedProduct);
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ error: "Failed to add product to wishlist" });
+    res
+      .status(500)
+      .json({ error: "Failed to add product to wishlist", msg: error });
   }
 });
 
@@ -34,10 +38,10 @@ wishlistRouter.delete("/:id", async (req, res) => {
     res.sendStatus(204);
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ error: "Failed to delete product from wishlist" });
+    res
+      .status(500)
+      .json({ error: "Failed to delete product from wishlist", msg: error });
   }
 });
 
-
-
-module.exports = wishlistRouter
+module.exports = wishlistRouter;

@@ -7,13 +7,13 @@ const signupRouter = express.Router();
 signupRouter.post("/", async (req, res) => {
   try {
     const { email, firstName, lastName, contact, password } = req.body;
-    
+
     // Check if the user already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(400).send({ error: "UserAlreadyExists" });
     }
-    
+
     const hashedPassword = await bcrypt.hash(password, 8);
     const newUser = new userModel({
       email,
@@ -22,11 +22,11 @@ signupRouter.post("/", async (req, res) => {
       contact,
       password: hashedPassword,
     });
-    
+
     await newUser.save();
     res.status(200).send({ message: "Signup successful" });
   } catch (error) {
-    res.status(500).send({ error: "SignupFailed" });
+    res.status(500).send({ error: "SignupFailed", msg: error });
   }
 });
 
@@ -39,9 +39,9 @@ signupRouter.post("/getuser", async (req, res) => {
       return res.status(404).send({ error: "UserNotFound" });
     }
 
-    res.status(200).send({msg:"User Found",user});
+    res.status(200).send({ msg: "User Found", user });
   } catch (error) {
-    res.status(500).send({ error: "GetUserFailed" });
+    res.status(500).send({ error: "GetUserFailed", msg: error });
   }
 });
 

@@ -1,5 +1,5 @@
-const express = require('express');
-const cartModel = require('../models/cart.model');
+const express = require("express");
+const cartModel = require("../models/cart.model");
 
 const cartRouter = express.Router();
 
@@ -10,7 +10,9 @@ cartRouter.get("/", async (req, res) => {
     res.json(cartProducts);
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ error: "Failed to fetch cart products" });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch cart products", msg: error });
   }
 });
 
@@ -22,7 +24,9 @@ cartRouter.post("/", async (req, res) => {
     res.status(201).json(addedProduct);
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ error: "Failed to add product to cart" });
+    res
+      .status(500)
+      .json({ error: "Failed to add product to cart", msg: error });
   }
 });
 
@@ -34,9 +38,10 @@ cartRouter.delete("/:id", async (req, res) => {
     res.sendStatus(204);
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ error: "Failed to delete product from cart" });
+    res
+      .status(500)
+      .json({ error: "Failed to delete product from cart", msg: error });
   }
 });
 
 module.exports = cartRouter;
-

@@ -75,7 +75,6 @@ productsRouter.get("/", async (req, res) => {
       }
     }
 
-
     const totalCount = await productModel.countDocuments(filter);
     const totalPages = Math.ceil(totalCount / limit);
 
@@ -87,7 +86,7 @@ productsRouter.get("/", async (req, res) => {
 
     res.json({ data, totalPages });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch products", err: error });
+    res.status(500).json({ error: "Failed to fetch products", msg: error });
   }
 });
 
@@ -103,8 +102,7 @@ productsRouter.get("/:id", async (req, res) => {
 
     res.json(product);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch product" });
+    res.status(500).json({ error: "Failed to fetch product", msg: error });
   }
 });
 
