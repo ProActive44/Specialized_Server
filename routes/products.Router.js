@@ -16,7 +16,7 @@ productsRouter.get("/", async (req, res) => {
       id_lte,
       color_like,
     } = req.query;
-    const { category, price, color, _id, q } = req.query;
+    let { category, price, color, _id, q } = req.query;
 
     const page = parseInt(_page) || 1;
     const limit = parseInt(_limit) || 9;
@@ -37,7 +37,6 @@ productsRouter.get("/", async (req, res) => {
       filter.discount = { $gte: parseInt(id_gte), $lte: parseInt(id_lte) };
     }
 
-  
     if (color_like) {
       let colorValues;
       if (Array.isArray(color_like)) {
@@ -47,7 +46,6 @@ productsRouter.get("/", async (req, res) => {
       }
       filter.color = { $in: colorValues };
     }
-    
 
     if (category) {
       filter.category = category;
@@ -65,13 +63,18 @@ productsRouter.get("/", async (req, res) => {
     if (q) {
       filter.$or = [
         { name: { $regex: q, $options: "i" } },
-        { rating: { $regex: q, $options: "i" } },
-        { price: { $regex: q, $options: "i" } },
         { type: { $regex: q, $options: "i" } },
         { category: { $regex: q, $options: "i" } },
         { color: { $regex: q, $options: "i" } },
       ];
+
+      // Check if q can be parsed as a number for "rating" and "price"
+      const numericValue = parseFloat(q);
+      if (!isNaN(numericValue)) {
+        filter.$or.push({ rating: numericValue }, { price: numericValue });
+      }
     }
+
 
     const totalCount = await productModel.countDocuments(filter);
     const totalPages = Math.ceil(totalCount / limit);
@@ -84,7 +87,7 @@ productsRouter.get("/", async (req, res) => {
 
     res.json({ data, totalPages });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch products" });
+    res.status(500).json({ error: "Failed to fetch products", err: error });
   }
 });
 
@@ -106,5 +109,3 @@ productsRouter.get("/:id", async (req, res) => {
 });
 
 module.exports = productsRouter;
-
-
