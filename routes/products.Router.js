@@ -16,7 +16,7 @@ productsRouter.get("/", async (req, res) => {
       id_lte,
       color_like,
     } = req.query;
-    let { category, price, color, _id, q } = req.query;
+    const { category, price, color, _id, q } = req.query;
 
     const page = parseInt(_page) || 1;
     const limit = parseInt(_limit) || 9;
