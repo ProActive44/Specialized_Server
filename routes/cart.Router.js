@@ -17,8 +17,8 @@ cartRouter.get("/", async (req, res) => {
 // Add product to cart
 cartRouter.post("/", async (req, res) => {
   try {
-    const newProduct = req.body;
-    const addedProduct = await cartModel.create(newProduct);
+    const product = req.body;
+    const addedProduct = await cartModel.create(product);
     res.status(201).json(addedProduct);
   } catch (error) {
     // console.error(error);
