@@ -17,8 +17,8 @@ wishlistRouter.get("/", async (req, res) => {
 // Add product to wishlist
 wishlistRouter.post("/", async (req, res) => {
   try {
-    const newProduct = req.body;
-    const addedProduct = await wishlistModel.create(newProduct);
+    const newWish = req.body;
+    const addedProduct = await wishlistModel.create(newWish);
     res.status(201).json(addedProduct);
   } catch (error) {
     // console.error(error);
