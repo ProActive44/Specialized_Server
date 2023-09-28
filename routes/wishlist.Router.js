@@ -24,12 +24,20 @@ wishlistRouter.get("/", async (req, res) => {
 wishlistRouter.post("/", async (req, res) => {
   try {
     const newWish = req.body;
-    delete newWish._id;
-    console.log(newWish)
-    const addedProduct = await wishlistModel.create(newWish);
-    res.status(201).json(addedProduct);
+    const existingWish = await wishlistModel.findOne({
+      productId: newWish.productId,
+      userId: newWish.userId,
+    });
+   
+    if (existingWish) {
+      // If a document with the same productId and userId already exists,
+      res.status(409).json({ error: "Product already exists in wishlist" });
+    } else {
+      delete newWish._id;
+      const addedProduct = await wishlistModel.create(newWish);
+      res.status(201).json(addedProduct);
+    }
   } catch (error) {
-    // console.error(error);
     res
       .status(500)
       .json({ error: "Failed to add product to wishlist", msg: error });
