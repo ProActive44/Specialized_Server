@@ -13,7 +13,6 @@ wishlistRouter.get("/", async (req, res) => {
     const wishlistProducts = await wishlistModel.find({ userId: userId });
     res.json(wishlistProducts);
   } catch (error) {
-    // console.error(error);
     res
       .status(500)
       .json({ error: "Failed to fetch wishlist products", msg: error });
@@ -51,7 +50,6 @@ wishlistRouter.delete("/:id", async (req, res) => {
     await wishlistModel.findByIdAndDelete(id);
     res.sendStatus(204);
   } catch (error) {
-    // console.error(error);
     res
       .status(500)
       .json({ error: "Failed to delete product from wishlist", msg: error });

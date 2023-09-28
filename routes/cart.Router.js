@@ -13,7 +13,6 @@ cartRouter.get("/", async (req, res) => {
     const cartProducts = await cartModel.find({ userId: userId });
     res.json(cartProducts);
   } catch (error) {
-    // console.error(error);
     res
       .status(500)
       .json({ error: "Failed to fetch cart products", msg: error });
@@ -24,11 +23,21 @@ cartRouter.get("/", async (req, res) => {
 cartRouter.post("/", async (req, res) => {
   try {
     const product = req.body;
-    delete product._id;
-    const addedProduct = await cartModel.create(product);
-    res.status(201).json(addedProduct);
+
+    const existinCart = await cartModel.findOne({
+      productId: product.productId,
+      userId: product.userId,
+    });
+
+    if (existinCart) {
+      // If a document with the same productId and userId already exists,
+      res.status(409).json({ error: "Product already exists in Cart" });
+    } else {
+      delete product._id;
+      const addedProduct = await cartModel.create(product);
+      res.status(201).json(addedProduct);
+    }
   } catch (error) {
-    // console.error(error);
     res
       .status(500)
       .json({ error: "Failed to add product to cart", msg: error });
@@ -42,7 +51,6 @@ cartRouter.delete("/:id", async (req, res) => {
     await cartModel.findByIdAndDelete(id);
     res.sendStatus(204);
   } catch (error) {
-    // console.error(error);
     res
       .status(500)
       .json({ error: "Failed to delete product from cart", msg: error });
